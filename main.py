@@ -1,74 +1,82 @@
 # Press the green button in the gutter to run the script.
+
 def check_pin():
     # pin =  sample pin
     pin = int(1234)
-    pincorect = False
+    pinCorect = False
     trials = 0
     while trials < 3:
-        clientpin = int(input("W celu wykonania operacji podaj cztero cyfrowy PIN:"))
+        clientPin = int(input("W celu wykonania operacji podaj cztero cyfrowy PIN:"))
         trials += 1
-        if clientpin == pin:
+        if clientPin == pin:
             print("PIN poprawny, wybierz operację jaką chcesz wykonać:")
-            pincorect = True
+            pinCorect = True
             break
         elif trials == 3:
             break
         else:
             print("PIN niepoprawny, spróbuj ponownie")
-    return pincorect
+    return pinCorect
 
 
 def operation_selection():
-    selectedoperation = int(
-        input("\nWypłata gotówki wprowadź '1'\nWyświetlenie stanu konta wprowadź '2'\nWyjście z SYMULATORA BANKOMATU '3'\n:"))
-    return selectedoperation
+    selectedOperation = int(input("\nWypłata gotówki wprowadź '1'\nWyświetlenie stanu konta wprowadź '2'\nWyjście z SYMULATORA BANKOMATU '3'\n:"))
+    return selectedOperation
 
-def cash_withdrawal():
-    multiple = 1
-    while multiple > 0:
-        paycheck = int(input("Proszę wprowadzić kwotę do wypłaty:"))
-        multiple = (paycheck % 50)
-        if multiple == 0:
-            if paycheck <= accountbalans:
-                if paycheck <= atmstate:
-                    nrofbanknotes200 = paycheck // 200
-                    nrofbanknotes100 = (paycheck - (200 * nrofbanknotes200)) // 100
-                    nrofbanknotes50 = (paycheck - (200 * nrofbanknotes200) - (100 * nrofbanknotes100)) // 50
-                    print("Wypłacasz kowotę:",paycheck,"\nOtrzymujesz:","\n",nrofbanknotes200,"banknot(ów) o nominale 200 PLN","\n", nrofbanknotes100, "banknot(ów) o nominale 100 PLN", "\n", nrofbanknotes50,"banknot(ów) o nominale 50 PLN")
 
-                else:
-                    print("Brak środków w SYMULATORZE BANKOMATU \nZapraszamy ponownie")
+def paycheck_is_a_multipe_of_50(paycheck):
+    return (paycheck % 50) == 0
 
-            else:
-                print("Brak środków na koncie \nZapraszamy ponownie")
 
-        else:
-            print("Błędna kwota. Wprowadzona kwota musi być wielokrotnością liczby 50.")
-    return
+def money_on_the_clients_account_less_equal_than_paycheck(paycheck, accountBalans):
+    return paycheck <= accountBalans
+
+
+def money_on_the_atm_state_higher_equal_than_paycheck(paycheck, atmState):
+    return paycheck <= atmState
+
+
+def banknotes_to_be_given_to_clients(paycheck):
+    nrofbanknotes200 = paycheck // 200
+    nrofbanknotes100 = (paycheck - (200 * nrofbanknotes200)) // 100
+    nrofbanknotes50 = (paycheck - (200 * nrofbanknotes200) - (100 * nrofbanknotes100)) // 50
+    print("Otrzymujesz banknoty:","\n",nrofbanknotes200,"x200pln","\n",nrofbanknotes100,"x100pln","\n",nrofbanknotes50,"x50pl")
+    return nrofbanknotes200, nrofbanknotes100, nrofbanknotes50
+
+
 
 #         code here
 
 if __name__ == '__main__':
-    accountbalans = 550
-    atmstate = 1000
+    accountBalans = 550
+    atmState = 1000
     print("Witaj w SYMULATORZE BANKOMATU")
     if check_pin():
         selectedoperation = 4
         while selectedoperation > 3 or selectedoperation <= 0:
             selectedoperation = operation_selection()
             if selectedoperation == 1:
-                 cash_withdrawal()
-                 break
-            elif selectedoperation == 2:
-                accountbalans = 550
-                print("Twój stan konta wynosi:{accountbalans}".format(accountbalans=accountbalans))
+                paycheck = int(input("Proszę wprowadzić kwotę do wypłaty:"))
+                if paycheck_is_a_multipe_of_50(paycheck):
+                    if money_on_the_clients_account_less_equal_than_paycheck(paycheck,accountBalans):
+                        if money_on_the_atm_state_higher_equal_than_paycheck(paycheck, atmState):
+                            banknotes_to_be_given_to_clients(paycheck)
+                        else:
+                            print("Brak środków w ATM")
+                    else:
+                        print("Brak środków na koncie")
+                else:
+                     print("NIe poprawna kwota")
                 break
+            elif  selectedoperation == 2:
+                    print("Twój stan konta wynosi",accountBalans)
+                    break
             elif selectedoperation == 3:
                 print("Dziękujemy, zapraszamy ponownie")
                 break
 
             else:
-                print("Nie wybrano poprawnej operacji, spróbuj ponownie:")
+             print("Nie wybrano poprawnej operacji, spróbuj ponownie:")
 
     else:
         print("Użytkownik zablkowany. Dziękujemy, zapraszamy ponownie")
