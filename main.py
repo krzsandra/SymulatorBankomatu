@@ -25,7 +25,10 @@ def operation_selection():
 
 
 def paycheck_is_a_multipe_of_50(paycheck):
-    return (paycheck % 50) == 0
+    if paycheck > 0:
+        return (paycheck % 50) == 0
+    else:
+        return False
 
 
 def money_on_the_clients_account_less_equal_than_paycheck(paycheck, accountBalans):
@@ -55,6 +58,7 @@ if __name__ == '__main__':
             selectedoperation = operation_selection()
             if selectedoperation == 1:
                 paycheck = int(input("Proszę wprowadzić kwotę do wypłaty:"))
+                multipe = 1
                 if paycheck_is_a_multipe_of_50(paycheck):
                     if money_on_the_clients_account_less_equal_than_paycheck(paycheck,accountBalans):
                         if money_on_the_atm_state_higher_equal_than_paycheck(paycheck, atmState):
@@ -67,7 +71,7 @@ if __name__ == '__main__':
                 else:
                      print("NIe poprawna kwota")
                 break
-            elif  selectedoperation == 2:
+            elif selectedoperation == 2:
                     print("Twój stan konta wynosi",accountBalans)
                     break
             elif selectedoperation == 3:
