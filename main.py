@@ -40,12 +40,10 @@ def banknotes_to_be_given_to_clients(paycheck):
     nrofbanknotes200 = paycheck // 200
     nrofbanknotes100 = (paycheck - (200 * nrofbanknotes200)) // 100
     nrofbanknotes50 = (paycheck - (200 * nrofbanknotes200) - (100 * nrofbanknotes100)) // 50
-    print("Otrzymujesz banknoty:","\n",nrofbanknotes200,"x200pln","\n",nrofbanknotes100,"x100pln","\n",nrofbanknotes50,"x50pl")
-    return nrofbanknotes200, nrofbanknotes100, nrofbanknotes50
+    return (nrofbanknotes200, nrofbanknotes100, nrofbanknotes50)
 
 
 
-#         code here
 
 if __name__ == '__main__':
     accountBalans = 550
@@ -60,7 +58,8 @@ if __name__ == '__main__':
                 if paycheck_is_a_multipe_of_50(paycheck):
                     if money_on_the_clients_account_less_equal_than_paycheck(paycheck,accountBalans):
                         if money_on_the_atm_state_higher_equal_than_paycheck(paycheck, atmState):
-                            banknotes_to_be_given_to_clients(paycheck)
+                            banknotes = banknotes_to_be_given_to_clients(paycheck)
+                            print("Otrzymujesz:\nLiczbę banknotów o nominale 200PLN:", banknotes[0],"\nLiczbę banknotów o nominale 100PLN:", banknotes[1], "\nLiczbę banknotów o nominale 50PLN:", banknotes[2])
                         else:
                             print("Brak środków w ATM")
                     else:
