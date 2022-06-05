@@ -57,20 +57,21 @@ if __name__ == '__main__':
         while selectedoperation > 3 or selectedoperation <= 0:
             selectedoperation = operation_selection()
             if selectedoperation == 1:
-                paycheck = int(input("Proszę wprowadzić kwotę do wypłaty:"))
                 multipe = 1
-                if paycheck_is_a_multipe_of_50(paycheck):
-                    if money_on_the_clients_account_less_equal_than_paycheck(paycheck,accountBalans):
-                        if money_on_the_atm_state_higher_equal_than_paycheck(paycheck, atmState):
-                            banknotes = banknotes_to_be_given_to_clients(paycheck)
-                            print("Otrzymujesz:\nLiczbę banknotów o nominale 200PLN:", banknotes[0],"\nLiczbę banknotów o nominale 100PLN:", banknotes[1], "\nLiczbę banknotów o nominale 50PLN:", banknotes[2])
+                while multipe != 0:
+                    paycheck = int(input("Proszę wprowadzić kwotę do wypłaty:"))
+                    if paycheck_is_a_multipe_of_50(paycheck):
+                        if money_on_the_clients_account_less_equal_than_paycheck(paycheck,accountBalans):
+                            if money_on_the_atm_state_higher_equal_than_paycheck(paycheck, atmState):
+                                banknotes = banknotes_to_be_given_to_clients(paycheck)
+                                print("Otrzymujesz:\nLiczbę banknotów o nominale 200PLN:", banknotes[0],"\nLiczbę banknotów o nominale 100PLN:", banknotes[1], "\nLiczbę banknotów o nominale 50PLN:", banknotes[2])
+                                break
+                            else:
+                                print("Brak środków w ATM")
                         else:
-                            print("Brak środków w ATM")
+                            print("Brak środków na koncie")
                     else:
-                        print("Brak środków na koncie")
-                else:
-                     print("NIe poprawna kwota")
-                break
+                        print("NIe poprawna kwota")
             elif selectedoperation == 2:
                     print("Twój stan konta wynosi",accountBalans)
                     break
