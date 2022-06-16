@@ -1,32 +1,28 @@
 import unittest
-import main
 from main import *
-
-
-
 
 
 class MyTestCase(unittest.TestCase):
 
     def test_paycheck_is_a_multiple_of_50(self):
-        self.assertTrue(paycheck_is_a_multiple_of_50(50))
-        self.assertTrue(paycheck_is_a_multiple_of_50(100))
-        self.assertTrue(paycheck_is_a_multiple_of_50(200))
-        self.assertTrue(paycheck_is_a_multiple_of_50(550))
-        self.assertTrue(paycheck_is_a_multiple_of_50(850))
-        self.assertTrue(paycheck_is_a_multiple_of_50(1000))
+        self.assertTrue(is_paycheck_amount_correct(50))
+        self.assertTrue(is_paycheck_amount_correct(100))
+        self.assertTrue(is_paycheck_amount_correct(200))
+        self.assertTrue(is_paycheck_amount_correct(550))
+        self.assertTrue(is_paycheck_amount_correct(850))
+        self.assertTrue(is_paycheck_amount_correct(1000))
 
     def test_paycheck_is_not_multiple_of_50(self):
-        self.assertFalse(paycheck_is_a_multiple_of_50(0))
-        self.assertFalse(paycheck_is_a_multiple_of_50(4))
-        self.assertFalse(paycheck_is_a_multiple_of_50(9))
-        self.assertFalse(paycheck_is_a_multiple_of_50(43))
-        self.assertFalse(paycheck_is_a_multiple_of_50(49))
-        self.assertFalse(paycheck_is_a_multiple_of_50(51))
-        self.assertFalse(paycheck_is_a_multiple_of_50(101))
-        self.assertFalse(paycheck_is_a_multiple_of_50(199))
-        self.assertFalse(paycheck_is_a_multiple_of_50(248))
-        self.assertFalse(paycheck_is_a_multiple_of_50(803))
+        self.assertFalse(is_paycheck_amount_correct(0))
+        self.assertFalse(is_paycheck_amount_correct(4))
+        self.assertFalse(is_paycheck_amount_correct(9))
+        self.assertFalse(is_paycheck_amount_correct(43))
+        self.assertFalse(is_paycheck_amount_correct(49))
+        self.assertFalse(is_paycheck_amount_correct(51))
+        self.assertFalse(is_paycheck_amount_correct(101))
+        self.assertFalse(is_paycheck_amount_correct(199))
+        self.assertFalse(is_paycheck_amount_correct(248))
+        self.assertFalse(is_paycheck_amount_correct(803))
 
     def test_money_on_the_clients_account_less_than_paycheck(self):
         paycheck = 50
