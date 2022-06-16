@@ -45,6 +45,28 @@ def banknotes_to_be_given_to_clients(paycheck):
     return (nrofbanknotes200, nrofbanknotes100, nrofbanknotes50)
 
 
+def withdrawal_operation(paycheck):
+    correct_paycheck = False
+    while correct_paycheck is not True:
+        paycheck = int(input("Proszę wprowadzić kwotę do wypłaty:"))
+        correct_paycheck = is_paycheck_amount_correct(paycheck)
+        if correct_paycheck:
+            if money_on_the_clients_account_less_equal_than_paycheck(paycheck, accountBalance):
+                if money_on_the_atm_state_higher_equal_than_paycheck(paycheck, atmBalance):
+                    banknotes = banknotes_to_be_given_to_clients(paycheck)
+                    print("Otrzymujesz:\nLiczbę banknotów o nominale 200PLN:", banknotes[0],
+                          "\nLiczbę banknotów o nominale 100PLN:", banknotes[1], "\nLiczbę banknotów o nominale 50PLN:",
+                          banknotes[2])
+                    break
+                else:
+                    print("Brak środków w ATM")
+                    break
+            else:
+                print("Brak środków na koncie")
+                break
+        else:
+            print("Nie poprawna kwota")
+    return correct_paycheck
 
 
 if __name__ == '__main__':
@@ -61,27 +83,11 @@ if __name__ == '__main__':
     print("Witaj w SYMULATORZE BANKOMATU")
     if check_pin():
         operationSelection = 4
-        while operationSelection > 3 or operationSelection <= 0:
+        while operationSelection > END or operationSelection <= 0:
             operationSelection = operation_selection(operations_dict)
             if operationSelection == WITHDRAW:
-                correct_paycheck = False
-                while correct_paycheck is not True:
-                    paycheck = int(input("Proszę wprowadzić kwotę do wypłaty:"))
-                    correct_paycheck = is_paycheck_amount_correct(paycheck)
-                    if correct_paycheck:
-                        if money_on_the_clients_account_less_equal_than_paycheck(paycheck, accountBalance):
-                            if money_on_the_atm_state_higher_equal_than_paycheck(paycheck, atmBalance):
-                                banknotes = banknotes_to_be_given_to_clients(paycheck)
-                                print("Otrzymujesz:\nLiczbę banknotów o nominale 200PLN:", banknotes[0], "\nLiczbę banknotów o nominale 100PLN:", banknotes[1], "\nLiczbę banknotów o nominale 50PLN:", banknotes[2])
-                                break
-                            else:
-                                print("Brak środków w ATM")
-                                break
-                        else:
-                            print("Brak środków na koncie")
-                            break
-                    else:
-                        print("NIe poprawna kwota")
+                paycheck = 0
+                withdrawal_operation(paycheck)
             elif operationSelection == BALANCE:
                 print("Twój stan konta wynosi", accountBalance)
                 break
@@ -91,11 +97,4 @@ if __name__ == '__main__':
             else:
                 print("Nie wybrano poprawnej operacji, spróbuj ponownie:")
     else:
-        print("Użytkownik zablkowany. Dziękujemy, zapraszamy ponownie")
-
-
-
-
-
-
-
+        print("Użytkownik zablokowany. Dziękujemy, zapraszamy ponownie")
