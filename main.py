@@ -1,3 +1,4 @@
+from customer import *
 
 
 def check_pin():
@@ -73,10 +74,27 @@ if __name__ == '__main__':
     WITHDRAW = 1
     BALANCE = 2
     END = 3
-
     operations_dict = {WITHDRAW: "Wypłata",
                        BALANCE: "Stan konta",
                        END: "Zakończ pracę z bankomatem"}
+
+    customer01 = Customer(10, 5236, 1500)
+    customer02 = Customer(20, 1234, 150)
+    customer03 = Customer(30, 7878, 2251)
+    customer04 = Customer(40, 1546, 562)
+    customer05 = Customer(50, 1234, 2250)
+    customer06 = Customer(60, 5236, 250)
+    customer07 = Customer(70, 4589, 50)
+    customer08 = Customer(80, 2107, 140)
+    customer09 = Customer(90, 1806, 850)
+    customer10 = Customer(100, 5469, 150)
+
+    customersList = [customer01, customer02, customer03, customer04, customer05, customer06, customer07, customer08, customer09 , customer10]
+    for client in customersList:
+        print(client.idclient)
+        print(client.pin)
+        print(client.balance)
+
 
     accountBalance = 1550
     atmBalance = 1000
