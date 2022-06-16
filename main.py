@@ -1,14 +1,21 @@
 from customer import *
 
 
-def check_pin():
-    pin = 1234
+def find_customer(idEntered, customerList):
+    for client in customerList:
+        if idEntered == client.idclient:
+            return client
+    return None
+
+
+
+def check_pin(customer):
     pinCorrect = False
     trials = 0
     while trials < 3:
-        clientPin = int(input("W celu wykonania operacji podaj cztero cyfrowy PIN:"))
+        pinEntered = int(input("W celu wykonania operacji podaj cztero cyfrowy PIN:"))
         trials += 1
-        if clientPin == pin:
+        if pinEntered == customer.pin:
             print("PIN poprawny")
             pinCorrect = True
             break
@@ -31,8 +38,8 @@ def is_paycheck_amount_correct(paycheck):
     return paycheck > 0 and (paycheck % 50) == 0
 
 
-def money_on_the_clients_account_less_equal_than_paycheck(paycheck, accountBalance):
-    return paycheck <= accountBalance
+def money_on_the_clients_account_less_equal_than_paycheck(paycheck, customer):
+    return paycheck <= customer
 
 
 def money_on_the_atm_state_higher_equal_than_paycheck(paycheck, atmBalance):
@@ -46,13 +53,13 @@ def banknotes_to_be_given_to_clients(paycheck):
     return (nrofbanknotes200, nrofbanknotes100, nrofbanknotes50)
 
 
-def withdrawal_operation(paycheck):
+def withdrawal_operation(customer):
     correct_paycheck = False
     while correct_paycheck is not True:
         paycheck = int(input("Proszę wprowadzić kwotę do wypłaty:"))
         correct_paycheck = is_paycheck_amount_correct(paycheck)
         if correct_paycheck:
-            if money_on_the_clients_account_less_equal_than_paycheck(paycheck, accountBalance):
+            if money_on_the_clients_account_less_equal_than_paycheck(paycheck, customer.balance):
                 if money_on_the_atm_state_higher_equal_than_paycheck(paycheck, atmBalance):
                     banknotes = banknotes_to_be_given_to_clients(paycheck)
                     print("Otrzymujesz:\nLiczbę banknotów o nominale 200PLN:", banknotes[0],
@@ -90,29 +97,28 @@ if __name__ == '__main__':
     customer10 = Customer(100, 5469, 150)
 
     customersList = [customer01, customer02, customer03, customer04, customer05, customer06, customer07, customer08, customer09 , customer10]
-    for client in customersList:
-        print(client.idclient)
-        print(client.pin)
-        print(client.balance)
 
-
-    accountBalance = 1550
     atmBalance = 1000
+
     print("Witaj w SYMULATORZE BANKOMATU")
-    if check_pin():
-        operationSelection = 4
-        while operationSelection > END or operationSelection <= 0:
-            operationSelection = operation_selection(operations_dict)
-            if operationSelection == WITHDRAW:
-                paycheck = 0
-                withdrawal_operation(paycheck)
-            elif operationSelection == BALANCE:
-                print("Twój stan konta wynosi", accountBalance)
-                break
-            elif operationSelection == END:
-                print("Dziękujemy, zapraszamy ponownie")
-                break
-            else:
-                print("Nie wybrano poprawnej operacji, spróbuj ponownie:")
+    idEntered = int(input("Proszę o podanie indentyfikatora klienta:"))
+    customer = find_customer(idEntered,customersList)
+    if customer:
+        if check_pin(customer):
+            operationSelection = 4
+            while operationSelection > END or operationSelection <= 0:
+                operationSelection = operation_selection(operations_dict)
+                if operationSelection == WITHDRAW:
+                    withdrawal_operation(customer)
+                elif operationSelection == BALANCE:
+                    print("Twój stan konta wynosi", customer.balance)
+                    break
+                elif operationSelection == END:
+                    print("Dziękujemy, zapraszamy ponownie")
+                    break
+                else:
+                    print("Nie wybrano poprawnej operacji, spróbuj ponownie:")
+        else:
+            print("Użytkownik zablokowany. Dziękujemy, zapraszamy ponownie")
     else:
-        print("Użytkownik zablokowany. Dziękujemy, zapraszamy ponownie")
+        print("Nie poprawny indentyfikator.Zapraszamy ponownie")
