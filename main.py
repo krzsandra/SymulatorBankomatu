@@ -64,10 +64,11 @@ if __name__ == '__main__':
         while operationSelection > 3 or operationSelection <= 0:
             operationSelection = operation_selection(operations_dict)
             if operationSelection == WITHDRAW:
-                multiple = 1
-                while multiple != 0:
+                correct_paycheck = False
+                while correct_paycheck is not True:
                     paycheck = int(input("Proszę wprowadzić kwotę do wypłaty:"))
-                    if is_paycheck_amount_correct(paycheck):
+                    correct_paycheck = is_paycheck_amount_correct(paycheck)
+                    if correct_paycheck:
                         if money_on_the_clients_account_less_equal_than_paycheck(paycheck, accountBalance):
                             if money_on_the_atm_state_higher_equal_than_paycheck(paycheck, atmBalance):
                                 banknotes = banknotes_to_be_given_to_clients(paycheck)
