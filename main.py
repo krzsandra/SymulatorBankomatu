@@ -23,7 +23,7 @@ if __name__ == '__main__':
     customer10 = Customer(100, 5469, 150)
     customersList = [customer01, customer02, customer03, customer04, customer05, customer06, customer07, customer08, customer09 , customer10]
 
-    print("Witaj w SYMULATORZE BANKOMATU")
+    print("Witaj w Symulatorze Bankomatu")
     idEntered = int(input("Proszę o podanie indentyfikatora klienta:"))
     customer = find_customer(idEntered, customersList)
     if customer:
